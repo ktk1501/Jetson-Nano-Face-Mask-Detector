@@ -1,19 +1,8 @@
-"""camera.py
-
-This code implements the Camera class, which encapsulates code to
-handle IP CAM, USB webcam or the Jetson onboard camera.  In
-addition, this Camera class is further extended to take a video
-file or an image file as input.
-"""
-
-
 import logging
 import threading
 import subprocess
-
 import numpy as np
 import cv2
-
 
 # The following flag ise used to control whether to use a GStreamer
 # pipeline to open USB webcam source.  If set to False, we just open
@@ -216,7 +205,7 @@ class Camera():
     def _stop(self):
         if self.thread_running:
             self.thread_running = False
-            #self.thread.join()
+            # self.thread.join()
 
     def read(self):
         """Read a frame from the camera object.

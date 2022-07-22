@@ -1,6 +1,3 @@
-"""mtcnn_trt.py
-"""
-
 import numpy as np
 import cv2
 import pytrt
@@ -94,10 +91,10 @@ def nms(boxes, threshold, type='Union'):
         inter = tw * th
         if type == 'Min':
             iou = inter / \
-                  np.minimum(areas[sorted_idx[-1]], areas[sorted_idx[0:-1]])
+                np.minimum(areas[sorted_idx[-1]], areas[sorted_idx[0:-1]])
         else:
             iou = inter / \
-                  (areas[sorted_idx[-1]] + areas[sorted_idx[0:-1]] - inter)
+                (areas[sorted_idx[-1]] + areas[sorted_idx[0:-1]] - inter)
         pick.append(sorted_idx[-1])
         sorted_idx = sorted_idx[np.where(iou <= threshold)[0]]
     return pick
@@ -197,7 +194,8 @@ def generate_onet_outputs(conf, reg_boxes, reg_marks, rboxes, t):
     ww = (boxes[:, 2]-boxes[:, 0]).reshape(-1, 1)
     hh = (boxes[:, 3]-boxes[:, 1]).reshape(-1, 1)
     marks = np.concatenate((xx, xx, xx, xx, xx, yy, yy, yy, yy, yy), axis=1)
-    marks += np.concatenate((ww, ww, ww, ww, ww, hh, hh, hh, hh, hh), axis=1) * reg_marks
+    marks += np.concatenate((ww, ww, ww, ww, ww, hh, hh,
+                            hh, hh, hh), axis=1) * reg_marks
     ww = ww + 1
     hh = hh + 1
     boxes[:, 0:4] += np.concatenate((ww, hh, ww, hh), axis=1) * reg_boxes
@@ -212,9 +210,9 @@ def clip_dets(dets, img_w, img_h):
     """
     dets[:, 0:-1] = np.fix(dets[:, 0:-1])
     evens = np.arange(0, dets.shape[1]-1, 2)
-    odds  = np.arange(1, dets.shape[1]-1, 2)
+    odds = np.arange(1, dets.shape[1]-1, 2)
     dets[:, evens] = np.clip(dets[:, evens], 0., float(img_w-1))
-    dets[:, odds]  = np.clip(dets[:, odds], 0., float(img_h-1))
+    dets[:, odds] = np.clip(dets[:, odds], 0., float(img_h-1))
     return dets
 
 
@@ -225,7 +223,7 @@ class TrtPNet(object):
     dimmensions of TrtPNet, as well as input H offsets (for all scales).
     The output H offsets are merely input offsets divided by stride (2).
     """
-    input_h_offsets  = (0, 216, 370, 478, 556, 610, 648, 676, 696)
+    input_h_offsets = (0, 216, 370, 478, 556, 610, 648, 676, 696)
     output_h_offsets = (0, 108, 185, 239, 278, 305, 324, 338, 348)
     max_n_scales = 9
 

@@ -1,19 +1,10 @@
-"""trt_mtcnn.py
-
-This script demonstrates how to do real-time face detection with
-Cython wrapped TensorRT optimized MTCNN engine.
-"""
-
-# import the necessary packages
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
-from imutils.video import VideoStream
+#from imutils.video import VideoStream
 
 import numpy as np
-import imutils
 import time
-import os
 import time
 import argparse
 
@@ -23,7 +14,7 @@ from utils.display import open_window, set_display, show_fps
 from utils.mtcnn import TrtMtcnn
 
 
-WINDOW_NAME = 'TrtMtcnnDemo'
+WINDOW_NAME = 'Face Mask Detection Live'
 BBOX_COLOR = (0, 255, 0)  # green
 
 
@@ -39,7 +30,7 @@ def parse_args():
     parser.add_argument('--minsize', type=int, default=40,
                         help='minsize (in pixels) for detection [40]')
     parser.add_argument("-m", "--model", type=str,
-                        default="mask_detector.model",
+                        default="convert_to_trt/mask_detector.model",
                         help="path to trained face mask detector model")
     args = parser.parse_args()
     return args

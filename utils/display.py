@@ -1,8 +1,3 @@
-
-"""display.py
-"""
-
-
 import cv2
 
 
